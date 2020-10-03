@@ -21,11 +21,11 @@ has() {
 }
 
 
-if has "git"; then
-    git clone --recursive "$GITHUB_URL" "$DOTPATH"
-else
-    exit 1
-fi
+#if has "git"; then
+#    git clone --recursive "$GITHUB_URL" "$DOTPATH"
+#else
+#    exit 1
+#fi
 
 cd "${DOTPATH}"
 if [ $? -ne 0 ]; then
