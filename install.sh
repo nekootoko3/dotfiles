@@ -94,6 +94,7 @@ brew_install() {
     # cask
     local -a formulae=(
       'alfred'
+      'authy'
       'bettertouchtool'
       'dash'
       'docker'
@@ -104,6 +105,7 @@ brew_install() {
       'karabiner-elements'
       'kindle'
       'macvim'
+      'notion'
       'postgres'
       'slack'
       'skitch'
@@ -118,10 +120,10 @@ brew_install() {
 
     # mas
     local -a formulae=(
-      '961632517' # Be Focused Pro
-      '865500966' # Feedly
-      '539883307' # line
-      '568494494' # pocket
+#      '961632517' # Be Focused Pro
+#      '865500966' # Feedly
+#      '539883307' # line
+#      '568494494' # pocket
     )
     local installed=`brew cask list`
 
