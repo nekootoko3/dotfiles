@@ -11,21 +11,21 @@ GITHUB_URL="https://${REPO}"
 
 DOTPATH=$(cd $(dirname $0); pwd)
 
-#is_exists() {
-#  which "$1" >/dev/null 2>&1
-#  return $?
-#}
-#
-#has() {
-#    is_exists "$@"
-#}
-#
-#
-#if has "git"; then
-#    git clone --recursive "$GITHUB_URL" "$DOTPATH"
-#else
-#    exit 1
-#fi
+is_exists() {
+  which "$1" >/dev/null 2>&1
+  return $?
+}
+
+has() {
+    is_exists "$@"
+}
+
+
+if has "git"; then
+    git clone --recursive "$GITHUB_URL" "$DOTPATH"
+else
+    exit 1
+fi
 
 cd "${DOTPATH}"
 if [ $? -ne 0 ]; then
@@ -62,91 +62,73 @@ brew_install() {
     brew update && brew upgrade
     [[ $? ]] && echo "$(tput setaf 2)Update Homebrew complete. ✔︎$(tput sgr0)"
 
-    local list_formulae=()
-    local -a missing_formulae=()
-    local -a desired_formulae=(
-      'readline'
-      'go'
-      'rbenv'
-      'the_platinum_searcher'
-      'tmux'
-      'zsh'
-      'peco'
-      'nodenv'
+    local -a formulae=(
+      'antigen'
+      'autoconf'
+      'awscli'
       'direnv'
       'ghq'
-      'antigen'
-      'redis'
-      'jq'
-      'awscli'
+      'go'
       'hub'
-      'antigen'
+      'jq'
+      'mas'
+      'nodenv'
+      'peco'
+      'rbenv'
+      'readline'
       'reattach-to-user-namespace'
-      'autoconf'
+      'redis'
+      'the_platinum_searcher'
+      'tmux'
       'wget'
       'yarn'
+      'zsh'
     )
 
-    local installed=`brew list`
-
-    # desired_formulaeで指定していて、インストールされていないものだけ入れる
-    for index in ${!desired_formulae[*]}
+    for index in ${!formulae[*]}
     do
-      brew install ${desired_formulae[$index]}
-#      local formula=`echo ${desired_formulae[$index]} | cut -d' ' -f 1`
-#      if [[ -z `echo "${installed}" | grep "^${formula}$"` ]]; then
-#        missing_formulae=("${missing_formulae[@]}" "${desired_formulae[$index]}")
-#      else
-#        echo "Installed ${formula}"
-#      fi
+      brew install ${formulae[$index]}
     done
 
-#    if [[ "$missing_formulae" ]]; then
-#      list_formulae=$( printf "%s " "${missing_formulae[@]}" )
-#
-#      echo "Installing missing Homebrew formulae..."
-#      brew install $list_formulae
-#
-#      [[ $? ]] && echo "$(tput setaf 2)Installed missing formulae ✔︎$(tput sgr0)"
-#    fi
-#
     # cask
-#    local -a missing_formulae=()
-    local -a desired_formulae=(
+    local -a formulae=(
       'alfred'
-      'slack'
-      'dash'
       'bettertouchtool'
-      'google-chrome'
-      'karabiner-elements'
-      'visual-studio-code'
-      'skitch'
-      'kindle'
-      'postgres'
+      'dash'
+      'docker'
       'dropbox'
+      'google-chrome'
+      'google-cloud-sdk'
+      'graphql-playground'
+      'java'
+      'karabiner-elements'
+      'kindle'
       'macvim'
+      'postgres'
+      'slack'
+      'skitch'
+      'visual-studio-code'
     )
     local installed=`brew cask list`
-#
-    for index in ${!desired_formulae[*]}
+
+    for index in ${!formulae[*]}
     do
-      brew cask install ${desired_formulae[$index]}
-#      local formula=`echo ${desired_formulae[$index]} | cut -d' ' -f 1`
-#      if [[ -z `echo "${installed}" | grep "^${formula}$"` ]]; then
-#        missing_formulae=("${missing_formulae[@]}" "${desired_formulae[$index]}")
-#      else
-#        echo "Installed ${formula}"
-#      fi
+      brew cask install ${formulae[$index]}
     done
-#
-#    if [[ "$missing_formulae" ]]; then
-#      list_formulae=$( printf "%s " "${missing_formulae[@]}" )
-#
-#      echo "Installing missing Homebrew formulae..."
-#      brew cask install $list_formulae
-#
-#      [[ $? ]] && echo "$(tput setaf 2)Installed missing formulae ✔︎$(tput sgr0)"
-#    fi
+
+    # mas
+    local -a formulae=(
+      '961632517' # Be Focused Pro
+      '865500966' # Feedly
+      '539883307' # line
+      '568494494' # pocket
+    )
+    local installed=`brew cask list`
+
+    for index in ${!formulae[*]}
+    do
+      mas install ${formulae[$index]}
+    done
 
     echo "Cleanup Homebrew..."
     brew cleanup
@@ -174,7 +156,7 @@ vscode_enabled() {
     ln -snfv "${DOTPATH}/vscode/${f}" "${VSCODE_PATH}/${f}"
   done
 
-#  ln -snfv "${DOTPATH}/vscode/vscodestyles.css" ${HOME}/.vscodestyles.css
+  ln -snfv "${DOTPATH}/vscode/vscodestyles.css" ${HOME}/.vscodestyles.css
 }
 
 brew_install
