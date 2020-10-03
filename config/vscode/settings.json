@@ -1,0 +1,434 @@
+{
+  "workbench.startupEditor": "newUntitledFile",
+  "workbench.view.alwaysShowHeaderActions": true,
+  "workbench.editor.enablePreview": false,
+  "workbench.editor.enablePreviewFromQuickOpen": false,
+  "workbench.statusBar.feedback.visible": false,
+  "workbench.fontAliasing": "auto",
+  "workbench.editor.showTabs": true,
+  "workbench.editor.labelFormat": "medium",
+  "workbench.settings.editor": "json",
+  "workbench.editor.showIcons": false,
+  "workbench.statusBar.visible": true,
+  "window.zoomLevel": -4,
+  "window.title": "${activeEditorMedium}${separator}${rootName}",
+  "window.nativeTabs": true,
+  "files.trimTrailingWhitespace": true,
+  "files.trimFinalNewlines": true,
+  "files.insertFinalNewline": true,
+  "files.autoSave": "onFocusChange",
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/**": true,
+    "**/images/**": true
+  },
+  "editor.wordSeparators": "`~!@#$%^&*()=+[{]}\\|;:'\",.<>/?",
+  "editor.scrollBeyondLastLine": true,
+  "editor.tabSize": 2,
+  "editor.matchBrackets": false,
+  "editor.folding": true,
+  "editor.multiCursorModifier": "alt",
+  "editor.formatOnSave": false,
+  "editor.formatOnPaste": false,
+  "editor.fontSize": 18,
+  "editor.lineHeight": 32,
+  "editor.fontWeight": "600",
+  "editor.cursorStyle": "line",
+  "editor.cursorWidth": 4,
+  "editor.letterSpacing": 0.7,
+  "editor.cursorBlinking": "phase",
+  "editor.renderWhitespace": "none",
+  "editor.minimap.enabled": false,
+  "editor.minimap.showSlider": "always",
+  "editor.minimap.renderCharacters": false,
+  "editor.lineNumbers": "off",
+  "editor.renderLineHighlight": "gutter",
+  "editor.showFoldingControls": "mouseover",
+  "editor.smoothScrolling": false,
+  "editor.hideCursorInOverviewRuler": true,
+  "editor.overviewRulerBorder": false,
+  "editor.quickSuggestionsDelay": 10,
+  "editor.renderControlCharacters": true,
+  "editor.suggestSelection": "recentlyUsed",
+  "editor.occurrencesHighlight": false,
+  "editor.renderIndentGuides": true,
+  "editor.parameterHints.enabled": false,
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": true,
+    "strings": true
+  },
+  "explorer.confirmDragAndDrop": false,
+  "explorer.openEditors.visible": 0,
+  "search.usePCRE2": true,
+  "search.location": "panel",
+  "search.smartCase": true,
+  "search.useIgnoreFiles": true,
+  "comments.openPanel": "neverOpen",
+  "emmet.showAbbreviationSuggestions": false,
+  "emmet.triggerExpansionOnTab": true,
+  "emmet.syntaxProfiles": {
+    "javascript": "jsx",
+    "typescript": "tsx",
+    "typescriptreact": "tsx"
+  },
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact",
+    "javascriptreact": "javascriptreact",
+    "typescriptreact": "javascriptreact"
+  },
+  "git.autofetch": true,
+  "terminal.external.osxExec": "iTerm.app",
+  "terminal.integrated.fontSize": 14,
+  "terminal.integrated.rendererType": "canvas",
+  "extensions.ignoreRecommendations": true,
+  "ruby.intellisense": false,
+  "ruby.rubocop.executePath": "/Users/kodainakamura/.rbenv/shims/",
+  "prettier.eslintIntegration": false,
+  "[markdown]": {
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": false,
+    "editor.wordWrap": "on",
+    "editor.quickSuggestions": false,
+    "editor.formatOnType": true,
+    "editor.renderWhitespace": "all",
+    "files.trimTrailingWhitespace": false,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.tabSize": 2,
+    "editor.formatOnSave": false,
+    "editor.formatOnPaste": false
+  },
+  "[javascriptreact]": {
+    "editor.tabSize": 2,
+    "editor.formatOnSave": false,
+    "editor.formatOnPaste": false,
+    "editor.autoClosingBrackets": "always"
+  },
+  "[typescript]": {
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": false
+  },
+  "[typescriptreact]": {
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": false,
+    "editor.autoClosingBrackets": "always"
+  },
+  "[haml]": {
+    "editor.tabSize": 2,
+    "editor.formatOnSave": false,
+    "editor.formatOnPaste": false,
+    "editor.autoClosingBrackets": "always"
+  },
+  "[json]": {
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": false
+  },
+  "[jsonc]": {
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": false
+  },
+  "[ruby]": {
+    "editor.tabSize": 2,
+    "editor.autoClosingBrackets": "always",
+    "editor.formatOnSave": false,
+    "editor.formatOnPaste": false
+  },
+  "[c]": {
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": false
+  },
+  "diffEditor.ignoreTrimWhitespace": false,
+  "prettier.stylelintIntegration": true,
+  "breadcrumbs.enabled": false,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "javascript.preferences.importModuleSpecifier": "relative",
+  "liveshare.showInStatusBar": "whileCollaborating",
+  "projectManager.openInNewWindowWhenClickingInStatusBar": false,
+  "projectManager.showProjectNameInStatusBar": false,
+  "vim.debug.silent": true,
+  "vim.easymotion": true,
+  "vim.easymotionMarkerFontFamily": "Fira Mono",
+  "vim.easymotionMarkerHeight": 32,
+  "vim.easymotionMarkerFontSize": "18",
+  "vim.easymotionMarkerWidthPerChar": 12,
+  "vim.easymotionMarkerFontWeight": "bold",
+  "vim.incsearch": true,
+  "vim.useSystemClipboard": true,
+  "vim.useCtrlKeys": true,
+  "vim.hlsearch": true,
+  "vim.surround": true,
+  "vim.sneak": true,
+  "vim.leader": "<space>",
+  "vim.visualstar": true,
+  "vim.autoSwitchInputMethod.enable": true,
+  "vim.autoSwitchInputMethod.defaultIM": "com.google.inputmethod.Japanese.Roman",
+  "vim.autoSwitchInputMethod.obtainIMCmd": "/usr/local/bin/im-select",
+  "vim.autoSwitchInputMethod.switchIMCmd": "/usr/local/bin/im-select {im}",
+  "vim.enableNeovim": false,
+  "vim.neovimPath": "/usr/local/bin/nvim",
+  "vim.handleKeys": {
+    "<C-f>": false
+  },
+  "vim.insertModeKeyBindings": [
+    {
+      "before": ["j", "j"],
+      "after": ["<Esc>"]
+    }
+  ],
+  "vim.visualModeKeyBindings": [
+    {
+      "before": ["tab"],
+      "after": ["%"]
+    },
+    {
+      "before": ["H"],
+      "after": ["^"]
+    },
+    {
+      "before": ["L"],
+      "after": ["$", "h"]
+    },
+    {
+      "before": ["C-k"],
+      "commands": ["editor.action.moveLinesUpAction"]
+    },
+    {
+      "before": ["C-j"],
+      "commands": ["editor.action.moveLinesDownAction"]
+    },
+    {
+      "before": ["C-l"],
+      "commands": ["editor.action.indentLines"]
+    },
+    {
+      "before": ["C-h"],
+      "commands": ["editor.action.outdentLines"]
+    }
+  ],
+  "vim.visualModeKeyBindingsNonRecursive": [
+    {
+      "before": ["p"],
+      "after": ["p", "g", "v", "y"]
+    },
+    {
+      "before": [">"],
+      "commands": ["editor.action.indentLines"]
+    },
+    {
+      "before": ["<"],
+      "commands": ["editor.action.outdentLines"]
+    },
+    {
+      "before": ["<leader>", "j"],
+      "commands": ["textmarker.toggleHighlight"]
+    },
+    {
+      "before": ["j"],
+      "after": ["g", "j"]
+    },
+    {
+      "before": ["k"],
+      "after": ["g", "k"]
+    }
+  ],
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<leader>", "l"],
+      "commands": ["clever.maximize.toggleWithoutSidebar"]
+    },
+    {
+      "before": ["tab"],
+      "after": ["%"]
+    },
+    {
+      "before": ["v"],
+      "after": ["v", "l", "h"]
+    },
+    {
+      "before": ["H"],
+      "after": ["^"]
+    },
+    {
+      "before": ["L"],
+      "after": ["$"]
+    },
+    {
+      "before": ["<C-u>"],
+      "after": ["2", "0", "k"]
+    },
+    {
+      "before": ["j"],
+      "after": ["g", "j"]
+    },
+    {
+      "before": ["k"],
+      "after": ["g", "k"]
+    },
+    {
+      "before": ["<C-d>"],
+      "after": ["2", "0", "j"]
+    },
+    {
+      "before": ["s", "h"],
+      "after": ["<C-w>", "h"]
+    },
+    {
+      "before": ["s", "l"],
+      "after": ["<C-w>", "l"]
+    },
+    {
+      "before": ["s", "k"],
+      "after": ["<C-w>", "k"]
+    },
+    {
+      "before": ["s", "j"],
+      "after": ["<C-w>", "j"]
+    },
+    {
+      "before": ["<C-h>"],
+      "after": ["<C-w>", "h"]
+    },
+    {
+      "before": ["<C-l>"],
+      "after": ["<C-w>", "l"]
+    },
+    {
+      "before": ["<C-k>"],
+      "after": ["<C-w>", "k"]
+    },
+    {
+      "before": ["<C-j>"],
+      "after": ["<C-w>", "j"]
+    },
+    {
+      "before": ["<Enter>"],
+      "after": [],
+      "commands": [
+        {
+          "command": ":nohl",
+          "args": []
+        }
+      ]
+    },
+    {
+      "before": ["<leader>", "m"],
+      "commands": ["bookmarks.toggle"]
+    },
+    {
+      "before": ["<leader>", "b"],
+      "commands": ["bookmarks.clearFromAllFiles"]
+    },
+    {
+      "before": ["<leader>", "j"],
+      "commands": ["textmarker.toggleHighlight"]
+    },
+    {
+      "before": ["<leader>", "c"],
+      "commands": ["textmarker.clearAllHighlight"]
+    },
+    {
+      "before": ["g", "w"],
+      "commands": ["workbench.action.switchWindow"]
+    },
+    {
+      "before": ["s", "v"],
+      "commands": ["workbench.action.splitEditorRight"]
+    },
+    {
+      "before": ["s", "s"],
+      "commands": ["workbench.action.splitEditorDown"]
+    },
+    {
+      "before": ["s", "q"],
+      "commands": [":wq"]
+    },
+    {
+      "before": ["g", "r"],
+      "commands": ["editor.action.referenceSearch.trigger"]
+    },
+    {
+      "before": ["<leader>", "f", "f"],
+      "commands": ["workbench.action.quickOpen"]
+    },
+    {
+      "before": ["<leader>", "f", "l"],
+      "commands": ["actions.find"]
+    },
+    {
+      "before": ["<leader>", "f", "g"],
+      "commands": ["workbench.action.findInFiles"]
+    },
+    {
+      "before": ["<leader>", "d"],
+      "commands": ["git.openChange"]
+    },
+    {
+      "before": ["<leader>", "g"],
+      "commands": ["gitlens.showQuickRepoStatus"]
+    },
+    {
+      "before": ["s", "n"],
+      "commands": ["workbench.action.showNextWindowTab"]
+    },
+    {
+      "before": ["s", "p"],
+      "commands": ["workbench.action.showPreviousWindowTab"]
+    },
+    {
+      "before": ["s", "t"],
+      "commands": ["projectManager.listProjectsNewWindow"]
+    }
+  ],
+  "editor.acceptSuggestionOnCommitCharacter": false,
+  "workbench.activityBar.visible": false,
+  "workbench.settings.useSplitJSON": true,
+  "gitlens.menus": {
+    "editor": {
+      "blame": false,
+      "clipboard": true,
+      "compare": true,
+      "details": false,
+      "history": false,
+      "remote": false
+    },
+    "editorGroup": false,
+    "editorTab": {
+      "clipboard": true,
+      "compare": true,
+      "history": true,
+      "remote": true
+    },
+    "explorer": {
+      "clipboard": true,
+      "compare": true,
+      "history": true,
+      "remote": true
+    },
+    "scmGroup": {
+      "compare": true,
+      "openClose": true,
+      "stash": true,
+      "stashInline": true
+    },
+    "scmItem": {
+      "clipboard": true,
+      "compare": true,
+      "history": true,
+      "remote": true,
+      "stash": true
+    }
+  },
+  "workbench.editor.revealIfOpen": true,
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.colorTheme": "Kary Pro Colors － Dark"
+}

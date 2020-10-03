@@ -1,0 +1,55 @@
+/* .title-actions > .monaco-toolbar > .monaco-action-bar > .actions-container > .action-item > .action-label.icon.explorer-action.new-folder {
+  display: none !important;
+}
+
+.title-actions > .monaco-toolbar > .monaco-action-bar > .actions-container > .action-item > .action-label.icon.explorer-action.new-file {
+  display: none !important;
+} */
+
+/* .title-actions > .monaco-toolbar > .monaco-action-bar > .actions-container > .action-item {
+  display: none !important;
+} */
+
+.mac {
+  font-family: 'Fira Mono' !important;
+}
+
+.view-lines {
+  font-family: 'Fira Mono' !important;
+}
+
+@media all and (min-width: 1200px) {
+  .monaco-quick-open-widget {
+    width: 1200px !important;
+    margin-left: -600px !important;
+  }
+  .quick-open-input {
+    width: 1188px !important;
+  }
+  .quick-input-widget {
+    width: 1200px !important;
+    margin-left: -600px !important;
+  }
+}
+
+.repl-input-wrapper .mtk1 {
+  font-family: Menlo, Monaco, "Courier New", monospace
+}
+
+@media all and (min-width: 600px) {
+  .monaco-editor .suggest-widget {
+    width: 600px !important;
+  }
+  .monaco-editor .suggest-widget.docs-side {
+    width: 660px !important;
+  }
+}
+
+.part.statusbar {
+  color: rgb(192, 231, 255) !important;
+}
+
+/* active tab border's height */
+.monaco-workbench .part.editor>.content .editor-group-container>.title .tabs-container>.tab.active.tab-border-top>.tab-border-top-container {
+  height: 4px;
+}

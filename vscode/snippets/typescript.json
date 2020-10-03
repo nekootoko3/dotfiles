@@ -1,0 +1,36 @@
+{
+  // Place your snippets for typescript here. Each snippet is defined under a snippet name and has a prefix, body and
+  // description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+  // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the
+  // same ids are connected.
+  // Example:
+  "Separator": {
+    "prefix": "cm",
+    "body": [
+      "//  $1",
+      "// -----------------------------------------------",
+      "\n"
+    ],
+    "description": "Separator"
+  },
+  "Small Separator": {
+    "prefix": "cms",
+    "body": ["//  $1", "// -----------------------", "\n"],
+    "description": "Small Separator"
+  },
+  "Print to console": {
+    "prefix": "lg",
+    "body": ["console.log(\"$1: \", $1);"],
+    "description": "Log output to console"
+  },
+  "implements": {
+    "prefix": "implements",
+    "body": ["implements"],
+    "description": "Implements"
+  },
+  "extends": {
+    "prefix": "extends",
+    "body": ["extends"],
+    "description": "Extends"
+  }
+}
