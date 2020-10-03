@@ -11,21 +11,21 @@ GITHUB_URL="https://${REPO}"
 
 DOTPATH=$(cd $(dirname $0); pwd)
 
-is_exists() {
-  which "$1" >/dev/null 2>&1
-  return $?
-}
-
-has() {
-    is_exists "$@"
-}
-
-
-if has "git"; then
-    git clone --recursive "$GITHUB_URL" "$DOTPATH"
-else
-    exit 1
-fi
+#is_exists() {
+#  which "$1" >/dev/null 2>&1
+#  return $?
+#}
+#
+#has() {
+#    is_exists "$@"
+#}
+#
+#
+#if has "git"; then
+#    git clone --recursive "$GITHUB_URL" "$DOTPATH"
+#else
+#    exit 1
+#fi
 
 cd "${DOTPATH}"
 if [ $? -ne 0 ]; then

@@ -2,9 +2,8 @@
 
 ### At First
 
-1. Log in to github.com, and [Generating a new SSH key and adding it to the ssh-agent](https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
-2. `mkdir -p ~/go/src/github.com/nekootoko3 && cd ~/go/src/github.com/nekootoko3 && git clone https://github.com/nekootoko3/dotfiles.git`
-3. `cd ./dotfiles && ./install.sh`
+1. `mkdir -p ~/go/src/github.com/nekootoko3 && cd ~/go/src/github.com/nekootoko3 && git clone https://github.com/nekootoko3/dotfiles.git`
+2. `cd ./dotfiles && ./install.sh`
 
 ### What you need to do manually
 
@@ -18,6 +17,7 @@
     - Key Repeat -> Fast
     - Delay Until Repeat -> Short
     - Touch Barh shows -> F1, F2, etc. Keys
+    - Move focus to next window -> option + tab
   - Shortcuts
     - Input Sources -> Select the previous input source -> off
   - Spotlight
