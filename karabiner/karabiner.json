@@ -16,15 +16,37 @@
         },
         "rules": [
           {
+            "description": "Change spacebar to right_option if pressed with other keys (Post spacebar when pressed alone)",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "spacebar",
+                  "modifiers": {
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "right_option"
+                  }
+                ],
+                "to_if_alone": [
+                  {
+                    "key_code": "spacebar"
+                  }
+                ]
+              }
+            ]
+          },
+          {
             "description": "コマンドキーを単体で押したときに、英数・かなキーを送信する。（左コマンドキーは英数、右コマンドキーはかな） (rev 3)",
             "manipulators": [
               {
                 "from": {
                   "key_code": "left_command",
                   "modifiers": {
-                    "optional": [
-                      "any"
-                    ]
+                    "optional": ["any"]
                   }
                 },
                 "parameters": {
@@ -52,9 +74,7 @@
                 "from": {
                   "key_code": "right_command",
                   "modifiers": {
-                    "optional": [
-                      "any"
-                    ]
+                    "optional": ["any"]
                   }
                 },
                 "parameters": {
@@ -106,9 +126,7 @@
                 "from": {
                   "key_code": "caps_lock",
                   "modifiers": {
-                    "optional": [
-                      "any"
-                    ]
+                    "optional": ["any"]
                   }
                 },
                 "to": [
@@ -231,16 +249,7 @@
         "delay_milliseconds_before_open_device": 1000
       },
       "selected": true,
-      "simple_modifications": [
-        {
-          "from": {
-            "key_code": "right_shift"
-          },
-          "to": {
-            "key_code": "right_option"
-          }
-        }
-      ],
+      "simple_modifications": [],
       "virtual_hid_keyboard": {
         "country_code": 0,
         "mouse_key_xy_scale": 100
