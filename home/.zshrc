@@ -8,6 +8,9 @@
 # Customize to your needs...
 
 ## antigen
+## For Appli sillicon
+source /opt/homebrew/share/antigen/antigen.zsh
+## For intel
 source /usr/local/share/antigen/antigen.zsh
 
 # Load the oh-my-zsh's library.
