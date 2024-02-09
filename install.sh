@@ -68,7 +68,7 @@ copy_home_files() {
   cd ${DOTPATH}/home
   for f in .??*
   do
-    cp "$DOTPATH/$f" "$HOME/$f"
+    cp "$f" "$HOME/$f"
   done
 }
 

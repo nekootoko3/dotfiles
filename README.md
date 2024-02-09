@@ -2,7 +2,7 @@
 
 ### At First
 
-1. `mkdir -p ~/go/src/github.com/nekootoko3 && cd ~/go/src/github.com/nekootoko3 && git clone https://github.com/nekootoko3/dotfiles.git`
+1. `mkdir -p ~/ghq/github.com/nekootoko3 && cd ~/ghq/github.com/nekootoko3 && git clone https://github.com/nekootoko3/dotfiles.git`
 2. `cd ./dotfiles && ./install.sh`
 
 ### What you need to do manually
