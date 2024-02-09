@@ -10,6 +10,7 @@ REPO="github.com/nekootoko3/dotfiles"
 GITHUB_URL="https://${REPO}"
 
 DOTPATH=$(cd $(dirname $0); pwd)
+VSCODE_PATH=${HOME}/Library/Application\ Support/Code/User
 
 is_exists() {
   which "$1" >/dev/null 2>&1
@@ -20,34 +21,14 @@ has() {
     is_exists "$@"
 }
 
-
-#if has "git"; then
-#    git clone --recursive "$GITHUB_URL" "$DOTPATH"
-#else
-#    exit 1
-#fi
-
 cd "${DOTPATH}"
 if [ $? -ne 0 ]; then
     exit 1
 fi
 
-link_files() {
-  cd ${DOTPATH}
-  for f in .??*
-  do
-    [[ ${f} = ".git" ]] && continue
-    [[ ${f} = ".gitignore" ]] && continue
-
-    ln -snfv "$DOTPATH/$f" "$HOME/$f"
-  done
-
-  # karabiner
-  mkdir -p ${HOME}/.config/karabiner
-  ln -snfv "${DOTPATH}/karabiner/karabiner.json" "${HOME}/.config/karabiner/karabiner.json"
-}
-
 brew_install() {
+  cd ${DOTPATH}
+
   # install brew itself
   if has "brew"; then
     echo "$(tput setaf 2)Already installed Homebrew ✔︎$(tput sgr0)"
@@ -62,61 +43,8 @@ brew_install() {
     brew update && brew upgrade
     [[ $? ]] && echo "$(tput setaf 2)Update Homebrew complete. ✔︎$(tput sgr0)"
 
-    local -a formulae=(
-      'antigen'
-      'autoconf'
-      'awscli'
-      'direnv'
-      'ghq'
-      'go'
-      'hub'
-      'java'
-      'jq'
-      'mas'
-      'nodenv'
-      'peco'
-      'rbenv'
-      'readline'
-      'reattach-to-user-namespace'
-      'redis'
-      'ruby-build'
-      'the_platinum_searcher'
-      'tmux'
-      'wget'
-      'yarn'
-      'zsh'
-    )
-
-    for index in ${!formulae[*]}
-    do
-      brew install ${formulae[$index]}
-    done
-
-    # cask
-    local -a formulae=(
-      'alfred'
-      'authy'
-      'bettertouchtool'
-      'dash'
-      'docker'
-      'dropbox'
-      'google-chrome'
-      'google-cloud-sdk'
-      'graphql-playground'
-      'karabiner-elements'
-      'kindle'
-      'macvim'
-      'notion'
-      'slack'
-      'skitch'
-      'visual-studio-code'
-    )
-    local installed=`brew cask list`
-
-    for index in ${!formulae[*]}
-    do
-      brew cask install ${formulae[$index]}
-    done
+    brew bundle install --file ${DOTPATH}/Brewfile
+    [[ $? ]] && echo "$(tput setaf 2)Install Homebrew formulae complete. ✔︎$(tput sgr0)"
 
     # mas
     local -a formulae=(
@@ -125,8 +53,6 @@ brew_install() {
 #      '539883307' # line
 #      '568494494' # pocket
     )
-    local installed=`brew cask list`
-
     for index in ${!formulae[*]}
     do
       mas install ${formulae[$index]}
@@ -138,31 +64,37 @@ brew_install() {
   fi
 }
 
+copy_home_files() {
+  cd ${DOTPATH}/home
+  for f in .??*
+  do
+    cp "$DOTPATH/$f" "$HOME/$f"
+  done
+}
+
+copy_karabiner() {
+  mkdir -p ${HOME}/.config/karabiner
+  cp "${DOTPATH}/karabiner/karabiner.json" "${HOME}/.config/karabiner/karabiner.json"
+}
+
 zsh_enabled() {
   [ ${SHELL} != "/bin/zsh"  ] && chsh -s /bin/zsh
   echo "$(tput setaf 2)Initialize complete!. ✔︎$(tput sgr0)"
 }
 
-vim_enabled() {
-  curl -fLo ${HOME}/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  mkdir -p ${HOME}/.vim/tmp
-}
-
 vscode_enabled() {
   cd ${DOTPATH}/vscode
-  cat ./extensions.txt | xargs -L 1 code --install-extension
-  VSCODE_PATH=${HOME}/Library/Application\ Support/Code/User
 
   for f in *.json
   do
-    ln -snfv "${DOTPATH}/vscode/${f}" "${VSCODE_PATH}/${f}"
+    cp "${DOTPATH}/vscode/${f}" "${VSCODE_PATH}/${f}"
   done
 
-  ln -snfv "${DOTPATH}/vscode/vscodestyles.css" ${HOME}/.vscodestyles.css
+  cp "${DOTPATH}/vscode/vscodestyles.css" ${HOME}/.vscodestyles.css
 }
 
 brew_install
-link_files
+copy_home_files
+copy_karabiner
 zsh_enabled
-vim_enabled
 vscode_enabled

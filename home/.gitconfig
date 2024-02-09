@@ -6,7 +6,7 @@
 [color]
     ui = auto
 [ghq]
-	root = /Users/yoshinaga/go/src
+    root = ~/ghq
 [push]
     default = current
 [url "ssh://git@github.com"]
@@ -19,3 +19,10 @@
     history = log --graph --date=short --decorate=short --pretty=format:'%C(yellow)%h %Cgreen%cd %Cblue%cn%Cred%d %Creset%s'
     unmerged = !git --no-pager diff --name-only --diff-filter=U
     sync = !git checkout master && git pull origin master && git fetch -p origin && git branch -d $(git branch --merged | grep -v master | grep -v '*')
+    master = !git checkout master && git pull origin master && git fetch -p origin && git branch -d $(git branch --merged | grep -v master | grep -v '*')
+    main = !git checkout main && git pull origin main && git fetch -p origin && git branch -d $(git branch --merged | grep -v main | grep -v '*')
+    dev = !git checkout develop && git pull origin develop && git fetch -p origin && git branch -d $(git branch --merged | grep -v develop | grep -v '*')
+[init]
+	templatedir = ~/.git-templates/git-secrets
+[diff]
+	external = difft

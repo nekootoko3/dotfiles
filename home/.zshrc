@@ -35,7 +35,7 @@ fi
 # Tell Antigen that you're done.
 antigen apply
 
-## command line
+## utility
 alias ll="ls -laG"
 
 ## git
@@ -48,28 +48,18 @@ alias gad="git add"
 alias gco="git commit"
 alias grs="git reset"
 alias gps="git push origin"
-alias mtr="git checkout master"
+alias gdl="git branch -D"
+alias gpk="git cherry-pick"
 
-alias hubr="hub browse"
+## docker
+alias dce="docker compose exec"
+alias dcu="docker compose up"
+alias dcr="docker compose run"
 
-## ruby
-eval "$(rbenv init -)"
-alias be="bundle exec"
-
-## rust
-export PATH="$HOME/.cargo/bin:$PATH"
-
-## postgres
-export PATH=/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH
-
-## nodenv
-export PATH="$HOME/.nodenv/bin:$PATH"
-eval "$(nodenv init -)"
 
 ## golang
-export PATH="$HOME/go/bin:$PATH"
-export GO111MODULE=on
 export GOPATH="$HOME/go"
+export PATH="$HOME/go/bin:$PATH"
 
 ## peco
 ### git
@@ -96,15 +86,6 @@ bindkey '^r' peco-select-history
 
 ## direnv
 eval "$(direnv hook zsh)"
-
-## python
-#export PATH=$HOME/Library/Python/3.7/bin:$PATH
-
-# added by travis gem
-[ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
-
-## vs code
-alias c="code"
 
 ## tmux
 alias ta="tmux attach -t"
