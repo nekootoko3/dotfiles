@@ -77,11 +77,6 @@ copy_karabiner() {
   cp "${DOTPATH}/karabiner/karabiner.json" "${HOME}/.config/karabiner/karabiner.json"
 }
 
-zsh_enabled() {
-  [ ${SHELL} != "/bin/zsh"  ] && chsh -s /bin/zsh
-  echo "$(tput setaf 2)Initialize complete!. ✔︎$(tput sgr0)"
-}
-
 vscode_enabled() {
   cd ${DOTPATH}/vscode
 
@@ -96,5 +91,4 @@ vscode_enabled() {
 brew_install
 copy_home_files
 copy_karabiner
-zsh_enabled
 vscode_enabled

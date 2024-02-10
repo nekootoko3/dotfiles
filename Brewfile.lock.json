@@ -2,19 +2,19 @@
   "entries": {
     "tap": {
       "aws/tap": {
-        "revision": "016b984290a10ec77a7dc275947e5c18fbaa2bf3"
+        "revision": "d86bbf1f38abdf77796d78850edf74c9d9a2a7fd"
       },
       "go-task/tap": {
         "revision": "100e8b72428727dac26fc61027332972d14db047"
       },
       "hashicorp/tap": {
-        "revision": "8eeccc903070cc7ac1c42ded5fb75c26829fd23f"
+        "revision": "aa0bfe10c39a4eabf72e12424a105ff1c96b98f9"
       },
       "homebrew/bundle": {
-        "revision": "cdb1b45e526e18d83853dbc3fa5989cfe00c8d3b"
+        "revision": "bb632218e19f001228fdbdd632fd7ce027bf5a4a"
       },
       "homebrew/cask-versions": {
-        "revision": "dbffa44ef385f96d5d8d8cdd6497f903b22b1d87"
+        "revision": "d1dd2982723a594488823f9a29f92740674c9133"
       },
       "homebrew/services": {
         "revision": "404a74488dd9f5e2799f495ba3736dfb604b025b"
@@ -2040,7 +2040,7 @@
         }
       },
       "bettertouchtool": {
-        "version": "4.396,43960",
+        "version": "4.397,43970",
         "options": {
           "full_name": "bettertouchtool"
         }
@@ -2197,6 +2197,14 @@
         "CLT": "15.1.0.0.1.1700200546",
         "Xcode": "12.4",
         "macOS": "13.6.3"
+      },
+      "sonoma": {
+        "HOMEBREW_VERSION": "4.2.7",
+        "HOMEBREW_PREFIX": "/opt/homebrew",
+        "Homebrew/homebrew-core": "api",
+        "CLT": "15.1.0.0.1.1700200546",
+        "Xcode": "15.1",
+        "macOS": "14.2"
       }
     }
   }
