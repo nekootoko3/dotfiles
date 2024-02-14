@@ -24,11 +24,13 @@ antigen bundle lein
 antigen bundle command-not-found
 antigen bundle zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-autosuggestions
-antigen bundle mafredri/zsh-async
-antigen bundle sindresorhus/pure
-
-# Syntax highlighting bundle.
+antigen bundle rupa/z z.sh
+antigen bundle olets/zsh-abbr@main
 antigen bundle zsh-users/zsh-syntax-highlighting
+
+antigen theme robbyrussell
+
+eval "$(starship init zsh)"
 
 # Activate zsh-completions
 if [ -e $HOME/.zsh/completion ]; then
@@ -69,7 +71,7 @@ export PATH="$HOME/go/bin:$PATH"
 function peco-src () {
   local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
   if [ -n "$selected_dir" ]; then
-    BUFFER="cd ${selected_dir}"
+    BUFFER="code ${selected_dir}"
     zle accept-line
   fi
   zle clear-screen
