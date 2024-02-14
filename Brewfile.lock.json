@@ -14,7 +14,7 @@
         "revision": "cdb1b45e526e18d83853dbc3fa5989cfe00c8d3b"
       },
       "homebrew/cask-versions": {
-        "revision": "dbffa44ef385f96d5d8d8cdd6497f903b22b1d87"
+        "revision": "682ce4076ce18e5b4c84cb2d749f811d0cccdd75"
       },
       "homebrew/services": {
         "revision": "404a74488dd9f5e2799f495ba3736dfb604b025b"
@@ -2197,6 +2197,14 @@
         "CLT": "15.1.0.0.1.1700200546",
         "Xcode": "12.4",
         "macOS": "13.6.3"
+      },
+      "sonoma": {
+        "HOMEBREW_VERSION": "4.2.7",
+        "HOMEBREW_PREFIX": "/opt/homebrew",
+        "Homebrew/homebrew-core": "api",
+        "CLT": "15.1.0.0.1.1700200546",
+        "Xcode": "15.1",
+        "macOS": "14.3"
       }
     }
   }

@@ -7,8 +7,11 @@
 
 # Customize to your needs...
 
+## homebrew
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 ## antigen
-source /usr/local/share/antigen/antigen.zsh
+source /opt/homebrew/share/antigen/antigen.zsh
 
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
@@ -23,6 +26,7 @@ antigen bundle zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle mafredri/zsh-async
 antigen bundle sindresorhus/pure
+antigen bundle rupa/z z.sh
 
 # Syntax highlighting bundle.
 antigen bundle zsh-users/zsh-syntax-highlighting
@@ -66,7 +70,7 @@ export PATH="$HOME/go/bin:$PATH"
 function peco-src () {
   local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
   if [ -n "$selected_dir" ]; then
-    BUFFER="cd ${selected_dir}"
+    BUFFER="code ${selected_dir}"
     zle accept-line
   fi
   zle clear-screen
@@ -91,5 +95,8 @@ eval "$(direnv hook zsh)"
 alias ta="tmux attach -t"
 alias tl="tmux ls"
 alias tn="tmux new -s"
+
+## adsf
+. /opt/homebrew/opt/asdf/libexec/asdf.sh
 
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
