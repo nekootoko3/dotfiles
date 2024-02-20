@@ -97,4 +97,8 @@ alias ta="tmux attach -t"
 alias tl="tmux ls"
 alias tn="tmux new -s"
 
+## asdf
+. /opt/homebrew/opt/asdf/libexec/asdf.sh
+
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
