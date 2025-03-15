@@ -11,6 +11,7 @@ GITHUB_URL="https://${REPO}"
 
 DOTPATH=$(cd $(dirname $0); pwd)
 VSCODE_PATH=${HOME}/Library/Application\ Support/Code/User
+CURSOR_PATH=${HOME}/Library/Application\ Support/Cursor/User
 
 is_exists() {
   which "$1" >/dev/null 2>&1
@@ -88,7 +89,16 @@ vscode_enabled() {
   cp "${DOTPATH}/vscode/vscodestyles.css" ${HOME}/.vscodestyles.css
 }
 
+cursor_enabled() {
+  cd ${DOTPATH}/cursor
+  for f in *.json
+  do
+    ln -sf "${DOTPATH}/cursor/${f}" "${CURSOR_PATH}/${f}"
+  done
+}
+
 brew_install
 copy_home_files
 copy_karabiner
 vscode_enabled
+cursor_enabled
