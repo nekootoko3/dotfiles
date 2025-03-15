@@ -1,0 +1,111 @@
+// Place your key bindings in this file to override the defaults
+[
+    {
+        "key": "cmd+h",
+        "command": "workbench.action.toggleSidebarVisibility"
+    },
+    {
+        "key": "cmd+b",
+        "command": "-workbench.action.toggleSidebarVisibility"
+    },
+    {
+        "key": "shift+cmd+l",
+        "command": "workbench.action.showNextWindowTab"
+    },
+    {
+        "key": "shift+cmd+h",
+        "command": "workbench.action.showPreviousWindowTab"
+    },
+    {
+        "key": "shift+l",
+        "command": "-notebook.toggleLineNumbers",
+        "when": "notebookEditorFocused && !inputFocus && !notebookOutputFocused"
+    },
+    {
+        "key": "ctrl+h",
+        "command": "workbench.action.navigateLeft",
+        "when": "editorTextFocus && vim.active && vim.mode == 'Normal'"
+    },
+    {
+        "key": "ctrl+l",
+        "command": "workbench.action.navigateRight",
+        "when": "editorTextFocus && vim.active && vim.mode == 'Normal'"
+    },
+    // editor の前後
+    {
+        "key": "ctrl+n",
+        "command": "workbench.action.nextEditor",
+        "when": "vim.active && editorTextFocus && vim.mode == 'Normal'"
+    },
+    {
+        "key": "ctrl+p",
+        "command": "workbench.action.previousEditor",
+        "when": "vim.active && editorTextFocus && vim.mode == 'Normal'"
+    },
+    // vim の insert mode の時、cursor を上下する
+    {
+        "key": "ctrl+p",
+        "command": "search.action.focusPreviousSearchResult",
+        "when": "inSearchEditor"
+    },
+    {
+        "key": "ctrl+n",
+        "command": "search.action.focusNextSearchResult",
+        "when": "inSearchEditor"
+    },
+    // 補完候補表示の上下
+    {
+        "key": "ctrl+p",
+        "command": "cursorUp",
+        "when": "editorTextFocus && vim.active && !suggestWidgetVisible && vim.mode == 'Insert'"
+    },
+    {
+        "key": "ctrl+n",
+        "command": "cursorDown",
+        "when": "editorTextFocus && vim.active && !suggestWidgetVisible && vim.mode == 'Insert'"
+    },
+    // cmd+o で開く
+    {
+        "key": "cmd+o cmd+g",
+        "command": "workbench.view.scm",
+        "when": "workbench.scm.active"
+    },
+    {
+        "key": "ctrl+shift+g",
+        "command": "-workbench.view.scm",
+        "when": "workbench.scm.active"
+    },
+    {
+        "key": "shift+cmd+f",
+        "command": "search.action.openNewEditor"
+    },
+    {
+        "key": "cmd+m cmd+t", // Matching Tag
+        "command": "editor.emmet.action.matchTag"
+    },
+    {
+        "key": "cmd+o cmd+e",
+        "command": "workbench.view.explorer",
+        "when": "viewContainer.workbench.view.explorer.enabled"
+    },
+    {
+        "key": "cmd+o cmd+t",
+        "command": "workbench.action.terminal.toggleTerminal",
+        "when": "terminal.active"
+    },
+    {
+        "key": "ctrl+`",
+        "command": "-workbench.action.terminal.toggleTerminal",
+        "when": "terminal.active"
+    },
+    {
+        "key": "cmd+o cmd+d",
+        "command": "workbench.debug.action.toggleRepl",
+        "when": "workbench.panel.repl.view.active"
+    },
+    {
+        "key": "shift+alt+cmd+y",
+        "command": "-workbench.debug.action.toggleRepl",
+        "when": "workbench.panel.repl.view.active"
+    },
+]
