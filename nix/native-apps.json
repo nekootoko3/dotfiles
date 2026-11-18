@@ -1,0 +1,54 @@
+[
+  {
+    "app": "Numbers.app",
+    "management": "Mac App Store"
+  },
+  {
+    "app": "iMovie.app",
+    "management": "Mac App Store"
+  },
+  {
+    "app": "Amazon Kindle.app",
+    "management": "Mac App Store"
+  },
+  {
+    "app": "ScreenZen.app",
+    "management": "Mac App Store"
+  },
+  {
+    "app": "LINE.app",
+    "management": "Mac App Store"
+  },
+  {
+    "app": "Keynote.app",
+    "management": "Mac App Store"
+  },
+  {
+    "app": "Pages.app",
+    "management": "Mac App Store"
+  },
+  {
+    "app": "GarageBand.app",
+    "management": "Mac App Store"
+  },
+  {
+    "app": "Goodnotes.app",
+    "management": "Mac App Store"
+  },
+  {
+    "app": "Karabiner-Elements.app",
+    "management": "Native installer and system driver"
+  },
+  {
+    "app": "Karabiner-EventViewer.app",
+    "management": "Part of native Karabiner installation"
+  },
+  {
+    "app": "ChatGPT.app",
+    "management": "Current task host; retain vendor update workflow"
+  },
+  {
+    "app": "Authy Desktop.app",
+    "management": "Existing vendor application; no maintained Nix macOS package"
+  }
+]
