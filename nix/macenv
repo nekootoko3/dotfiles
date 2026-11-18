@@ -1,0 +1,260 @@
+#!/usr/bin/env python3
+"""Apply the Mac configuration and copy selected app settings."""
+import argparse
+import fcntl
+import json
+import os
+import re
+import shutil
+import subprocess
+import tempfile
+from pathlib import Path
+
+NIX_DIR = Path(__file__).resolve().parent
+REPO = NIX_DIR.parent
+HOME = Path.home()
+BREW = "/run/current-system/sw/bin/brew"
+DARWIN_REBUILD = "/run/current-system/sw/bin/darwin-rebuild"
+CODE = "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
+NIX_CONFIG = "extra-experimental-features = nix-command flakes"
+STATE_DIR = HOME / "Library/Application Support/macenv"
+
+
+def run(*args, **kwargs):
+    return subprocess.run(args, check=True, **kwargs)
+
+
+def write_file(path, content):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    mode = path.stat().st_mode & 0o777 if path.exists() else 0o600
+    with tempfile.NamedTemporaryFile(dir=path.parent, delete=False) as temporary:
+        pending = Path(temporary.name)
+        try:
+            temporary.write(content)
+            temporary.close()
+            pending.chmod(mode)
+            pending.replace(path)
+        finally:
+            pending.unlink(missing_ok=True)
+
+
+def build_and_switch(kind, rollback_build=None):
+    env = dict(os.environ, NIX_CONFIG=NIX_CONFIG)
+    if kind == "cli":
+        build = ["home-manager", "build", "--impure", "--no-out-link", "--flake", ".#mac"]
+        switch = ["home-manager", "switch", "--impure", "--flake", ".#mac"]
+    else:
+        env.update(DARWIN_USER=run("id", "-un", capture_output=True, text=True).stdout.strip(),
+                   DARWIN_HOME=str(HOME))
+        build = ["nix", "build", "--impure", "--no-link", ".#darwinConfigurations.mac.system"]
+        switch = [
+            "sudo", "env", f"DARWIN_USER={env['DARWIN_USER']}", f"DARWIN_HOME={HOME}",
+            f"NIX_CONFIG={NIX_CONFIG}", DARWIN_REBUILD, "switch", "--impure", "--flake", ".#mac",
+        ]
+    try:
+        run(*build, cwd=NIX_DIR, env=env)
+    except (OSError, subprocess.CalledProcessError, KeyboardInterrupt):
+        if rollback_build:
+            rollback_build()
+            print("Build failed. Restored the package list.", flush=True)
+        raise
+    try:
+        run(*switch, cwd=NIX_DIR, env=env)
+    except (OSError, subprocess.CalledProcessError, KeyboardInterrupt):
+        print(f"Apply failed. Retry with macenv apply {kind}.", flush=True)
+        raise
+
+
+def brew(*args, **kwargs):
+    env = dict(os.environ, HOMEBREW_NO_AUTO_UPDATE="1", HOMEBREW_NO_INSTALL_FROM_API="1")
+    return run(BREW, *args, env=env, **kwargs)
+
+
+def declared_package(packages, name):
+    if name in packages:
+        return name
+    matches = [item for item in packages if item.endswith(f"/{name}")]
+    if len(matches) > 1:
+        raise ValueError(f"{name} is ambiguous. Use its full name: {', '.join(matches)}")
+    return next(iter(matches), None)
+
+
+def uninstall_cask(name):
+    try:
+        installed = brew("list", "--cask", "--full-name", capture_output=True, text=True)
+        if name in installed.stdout.splitlines():
+            brew("uninstall", "--cask", name)
+    except (OSError, subprocess.CalledProcessError, KeyboardInterrupt):
+        print(f"To finish, run brew uninstall --cask {name}.", flush=True)
+        raise
+
+
+def change_package(kind, action, name):
+    pattern = r"[A-Za-z0-9_][A-Za-z0-9_+-]*"
+    if kind == "gui":
+        pattern = r"(?:[a-z0-9][a-z0-9._-]*/){0,2}[a-z0-9][a-z0-9+@._-]*"
+    if not re.fullmatch(pattern, name):
+        raise ValueError(f"Invalid package name: {name}")
+
+    path = NIX_DIR / ("cli-packages.json" if kind == "cli" else "gui-casks.json")
+    original = path.read_bytes()
+    packages = json.loads(original)
+    declared = declared_package(packages, name)
+    removing = action == "remove"
+    if removing:
+        if declared is None:
+            raise ValueError(f"{name} is not declared in {path.name}.")
+        name = declared
+        packages.remove(name)
+    else:
+        if declared:
+            print(f"{name} is already declared. To reapply, run macenv apply {kind}.")
+            return
+        if kind == "gui":
+            result = brew("info", "--cask", "--json=v2", name, capture_output=True, text=True)
+            casks = json.loads(result.stdout)["casks"]
+            if len(casks) != 1:
+                raise ValueError(f"Expected one Homebrew Cask for {name}.")
+            name = casks[0]["full_token"]
+            if declared_package(packages, name):
+                raise ValueError(f"{name} is already declared under its canonical name.")
+        packages.append(name)
+
+    write_file(path, (json.dumps(packages, indent=2) + "\n").encode())
+    try:
+        build_and_switch(kind, lambda: write_file(path, original))
+    except (OSError, subprocess.CalledProcessError, KeyboardInterrupt):
+        if removing and kind == "gui" and path.read_bytes() != original:
+            print(f"After applying the configuration, run brew uninstall --cask {name}.", flush=True)
+        raise
+    if removing and kind == "gui":
+        uninstall_cask(name)
+    verb = "Removed" if removing else "Added"
+    print(f"{verb} {name}. Review the change with git -C {REPO} diff.")
+
+
+def settings_paths(app, save):
+    if app == "karabiner":
+        yield REPO / "karabiner/karabiner.json", HOME / ".config/karabiner/karabiner.json"
+    elif app == "cursor":
+        user = HOME / "Library/Application Support/Cursor/User"
+        yield REPO / "cursor/settings.json", user / "settings.json"
+        keybindings = user / "keybindings.json"
+        if not (keybindings.is_symlink() and keybindings.resolve().is_relative_to("/nix/store")):
+            yield NIX_DIR / "dotfiles/cursor-keybindings.json", keybindings
+    else:
+        user = HOME / "Library/Application Support/Code/User"
+        repo = REPO / "vscode"
+        for name in ("settings.json", "keybindings.json"):
+            yield repo / name, user / name
+        yield repo / "vscodestyles.css", HOME / ".vscodestyles.css"
+        source = (user if save else repo) / "snippets"
+        for snippet in sorted(source.glob("*")):
+            if snippet.is_file() and snippet.suffix in {".json", ".code-snippets"}:
+                yield repo / "snippets" / snippet.name, user / "snippets" / snippet.name
+
+
+def copy_settings(changes):
+    # Save every replacement before writing any of them.
+    replacements = {}
+    for target, content in changes:
+        if target.is_symlink():
+            raise ValueError(f"Resolve this existing symlink before replacing it: {target}")
+        if target.exists():
+            replacements[target] = target.read_bytes()
+
+    if replacements:
+        backup = Path(tempfile.mkdtemp(prefix="settings-", dir=STATE_DIR))
+        for target, content in replacements.items():
+            write_file(backup / target.relative_to("/"), content)
+        print(f"Backup: {backup}", flush=True)
+
+    for target, content in changes:
+        write_file(target, content)
+        print(target)
+
+
+def extensions_for_sync():
+    executable = shutil.which("code") or CODE
+    installed = run(executable, "--list-extensions", capture_output=True, text=True)
+    inventory = REPO / "vscode/extensions.txt"
+    current = [name.strip() for name in installed.stdout.splitlines() if name.strip()]
+    saved = [name.strip() for name in inventory.read_text().splitlines() if name.strip()]
+    for name in [*current, *saved]:
+        if not re.fullmatch(r"[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+", name):
+            raise ValueError(f"Invalid VS Code extension ID: {name}")
+    return executable, inventory, current, saved
+
+
+def sync_settings(action, app):
+    save = action == "save"
+    if not save and app == "cursor":
+        run(str(REPO / "install.sh"))
+        build_and_switch("cli")
+        return
+
+    changes = []
+    for repository, local in settings_paths(app, save):
+        source, target = (local, repository) if save else (repository, local)
+        if source.is_file():
+            content = source.read_bytes()
+            if not target.is_file() or content != target.read_bytes():
+                changes.append((target, content))
+
+    missing = []
+    if app == "vscode":
+        executable, inventory, current, saved = extensions_for_sync()
+        current_ids = {name.lower() for name in current}
+        saved_ids = {name.lower() for name in saved}
+        if save:
+            # Keep the saved order for extensions that are still installed.
+            names = [name for name in saved if name.lower() in current_ids]
+            names.extend(name for name in current if name.lower() not in saved_ids)
+            content = "".join(f"{name}\n" for name in names).encode()
+            if content != inventory.read_bytes():
+                changes.append((inventory, content))
+        else:
+            missing = [name for name in saved if name.lower() not in current_ids]
+
+    copy_settings(changes)
+    if missing:
+        run(executable, *(arg for name in missing for arg in ("--install-extension", name)))
+    if not changes and not missing:
+        print("Settings are up to date.")
+    if save:
+        print(f"Review the settings with git -C {REPO} status --short.")
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    commands = parser.add_subparsers(dest="command", required=True)
+    for kind in ("cli", "gui"):
+        package = commands.add_parser(kind)
+        package.add_argument("action", choices=["add", "remove"])
+        package.add_argument("name")
+    commands.add_parser("apply").add_argument("kind", choices=["cli", "gui"])
+    settings = commands.add_parser("settings")
+    settings.add_argument("action", choices=["save", "restore"])
+    settings.add_argument("app", choices=["vscode", "cursor", "karabiner"])
+    args = parser.parse_args()
+
+    STATE_DIR.mkdir(parents=True, exist_ok=True)
+    with (STATE_DIR / "lock").open("a") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        if args.command == "settings":
+            sync_settings(args.action, args.app)
+        elif args.command == "apply":
+            build_and_switch(args.kind)
+        else:
+            change_package(args.command, args.action, args.name)
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except subprocess.CalledProcessError as error:
+        raise SystemExit((error.stderr or "").strip() or str(error))
+    except (OSError, ValueError) as error:
+        raise SystemExit(str(error))
+    except KeyboardInterrupt:
+        raise SystemExit(130)

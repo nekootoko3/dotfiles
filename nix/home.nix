@@ -24,64 +24,16 @@ assert lib.assertMsg (username != "" && username != "root" && lib.hasPrefix "/" 
   home.file.".vim/autoload/plug.vim".source = ./dotfiles/plug.vim;
 
   home.packages = with pkgs; [
-    antigen
-    autoconf
-    automake
-    bash
-    ffmpeg
-    ghostscript
-    go
-    google-cloud-sdk
-    graphviz
-    imagemagick
-    jdk21
-    libpq
-    libtool
-    mas
-    netpbm
-    nodejs_22
-    openjpeg
-    pkg-config
-    pinentry_mac
-    pnpm
-    postgresql_18
     (python312.withPackages (ps: [ ps.numpy ps.pip ]))
-    qemu
-    reattach-to-user-namespace
-    ruby
-    rustc
-    cargo
-    cargo-binutils
-    rust-analyzer
-    tesseract
-    uv
-    watchman
-    libwebp
-    yarn
     (writeShellScriptBin "vercel" ''
       export PATH="${nodejs_22}/bin:$PATH"
       exec ${nodejs_22}/bin/npx --yes vercel@65.16.0 "$@"
     '')
-    act
-    awscli2
-    # Preserve macOS command semantics; GNU tools are available as gls, gdate, etc.
-    coreutils-prefixed
-    curl
-    difftastic
-    direnv
-    gawk
-    gh
-    ghq
-    gnupg
-    jq
-    moreutils
-    nkf
-    peco
-    starship
-    tbls
-    tmux
-    wget
-  ];
+    (writeShellScriptBin "macenv" ''
+      exec ${python312}/bin/python3 "$HOME/ghq/github.com/nekootoko3/dotfiles/nix/macenv" "$@"
+    '')
+  ] ++ map (name: builtins.getAttr name pkgs)
+    (builtins.fromJSON (builtins.readFile ./cli-packages.json));
 
   programs.home-manager.enable = true;
   home.activation.requireCaskMigration = lib.hm.dag.entryBefore [ "writeBoundary" ] ''

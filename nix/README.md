@@ -1,7 +1,7 @@
 # Nix と GUI 専用 Homebrew の管理
 
-CLI・言語環境は home.nix / Home Manager、GUI 14種類は darwin.nix / nix-darwin の
-homebrew.casks、プロジェクト環境は各プロジェクトの devShell で管理する。
+CLI・言語環境は cli-packages.json と home.nix / Home Manager、GUI は gui-casks.json と
+darwin.nix / nix-darwin、プロジェクト環境は各プロジェクトの devShell で管理する。
 Homebrew 本体と core/cask の配布定義も nix-homebrew / flake.lock で固定する。
 Homebrew に手動で CLI を追加しない。App Store 版や Karabiner のドライバー等は
 native-apps.json に記録した既存方式を維持する。
@@ -33,6 +33,13 @@ sudo env DARWIN_USER="$DARWIN_USER" DARWIN_HOME="$DARWIN_HOME" NIX_CONFIG="$NIX_
 
 ## 通常の反映
 
+普段の追加には `macenv cli add ripgrep` や `macenv gui add iina` を使う。
+設定ファイルを手で編集した後は `macenv apply cli` または `macenv apply gui` で反映する。
+削除には `macenv cli remove ripgrep` や `macenv gui remove iina` を使う。
+アプリ設定の同期は[リポジトリの README](../README.md#アプリ設定の同期)を参照。
+
+直接反映する場合は次のコマンドを使う。
+
 ```sh
 cd ~/ghq/github.com/nekootoko3/dotfiles/nix
 export NIX_CONFIG='extra-experimental-features = nix-command flakes'
@@ -48,7 +55,7 @@ Git の名前・メール・仕事用 includeIf は書き込み可能な ~/.gitc
 初回の対話シェルでは Antigen がネットワークからプラグインを取得する。
 Vim のプラグインは :PlugInstall で取得する。これらのプラグインの版は flake.lock の対象外。
 Vim のスワップディレクトリは mkdir -p ~/.vim/tmp で作成できる。
-Cursor の settings.json、VS Code、Karabiner は[アプリ設定の復元手順](../README.md#アプリ設定の復元)を使う。
+Cursor の settings.json、VS Code、Karabiner は[アプリ設定の復元手順](../README.md#アプリ設定の同期)を使う。
 
 ## 更新
 

@@ -33,14 +33,7 @@ assert lib.assertMsg (username != "" && username != "root" && lib.hasPrefix "/" 
     enable = true;
     taps = [ "homebrew/core" "homebrew/cask" "local/pinned" ];
     brews = [ ];
-    casks = [
-      "local/pinned/bettertouchtool"
-      "local/pinned/cleanshot"
-      "local/pinned/dash"
-      "cursor" "ghostty" "google-chrome" "microsoft-teams"
-      "notion" "obsidian" "raycast" "slack" "visual-studio-code"
-      "pgadmin4" "zoom"
-    ];
+    casks = builtins.fromJSON (builtins.readFile ./gui-casks.json);
     onActivation = {
       autoUpdate = false;
       upgrade = true;

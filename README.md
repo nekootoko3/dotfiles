@@ -14,32 +14,46 @@ cd ~/ghq/github.com/nekootoko3/dotfiles/nix
 Home Manager が配布する設定は `nix/dotfiles/` で編集します。
 tmux の `prefix → Ctrl-k` は上のペインに移動します。履歴の消去は `prefix → Ctrl-Delete` の後に確認します。
 
-### アプリ設定の復元
+### パッケージの追加と削除
 
-以下はリポジトリのルートで実行します。Cursor の settings.json は編集可能なリンクにします。
-既存のファイルやリンクは同じフォルダの .dotfiles-backup.* に退避します。
-
-```sh
-cd ~/ghq/github.com/nekootoko3/dotfiles
-./install.sh
-```
-
-VS Code と Karabiner は書き込み可能なコピーを使います。次のコマンドは対象アプリを終了して実行します。
-既存ファイルを置き換える際は個別に確認します。
+Home Manager を初回適用すると、どのディレクトリからでも `macenv` を使えます。
 
 ```sh
-code_user="$HOME/Library/Application Support/Code/User"
-mkdir -p "$code_user/snippets" "$HOME/.config/karabiner"
-cp -i vscode/settings.json vscode/keybindings.json "$code_user/"
-cp -i vscode/snippets/*.json "$code_user/snippets/"
-cp -i vscode/vscodestyles.css "$HOME/.vscodestyles.css"
-cp -i karabiner/karabiner.json "$HOME/.config/karabiner/"
+macenv cli add ripgrep
+macenv gui add iina
+macenv cli remove ripgrep
+macenv gui remove iina
 ```
 
-VS Code 拡張の復元用一覧は `vscode/extensions.txt` にあります。必要なものを選んで
-`code --install-extension 拡張ID` で導入できます。アプリ側の編集を Git に戻すときは、
-たとえば `git diff --no-index -- vscode/settings.json "$code_user/settings.json"` で差分を確認し、
-共有したい変更だけを反映します。
+それぞれ `nix/cli-packages.json` と `nix/gui-casks.json` を更新し、ビルド後に反映します。
+GUI の反映には管理者認証が必要で、ほかの宣言済み Cask も更新される場合があります。
+GUI の削除はアプリを終了してから実行します。設定データを消す `--zap` は使いません。
+リストを手で編集した場合や他の Mac で変更を取り込んだ場合は、`macenv apply cli` または
+`macenv apply gui` で反映します。
+
+### アプリ設定の同期
+
+設定を変更した Mac で `save` を実行し、Git の差分を確認して共有する変更をコミットします。
+別の Mac ではそのコミットを取り込んでから、対象アプリを終了し `restore` を実行します。
+
+```sh
+macenv settings save vscode
+macenv settings restore vscode
+macenv settings save karabiner
+macenv settings restore karabiner
+macenv settings restore cursor
+```
+
+- **VS Code** は標準プロファイルの設定・キーバインド・スニペット・カスタム CSS・拡張一覧が対象です。
+  復元時は不足している拡張を導入します。既存のファイルや拡張は一覧から外れても自動削除しません。
+- **Cursor** の `settings.json` は `restore` でリポジトリにリンクし、キーバインドは Home Manager で反映します。
+  リンクがファイルに置き換わった場合は `macenv settings save cursor` で取り込めます。
+- **Karabiner** は `karabiner.json` が対象です。ドライバーや macOS の権限は各 Mac で設定します。
+
+VS Code と Karabiner は、変更のあるファイルを上書きする前に
+`~/Library/Application Support/macenv/` にバックアップし、その場所を表示します。
+Cursor のリンク設定時のバックアップはアプリの設定フォルダに作成します。
+Git に共有する前に設定の差分を確認し、端末固有のパスやトークンがあれば取り除いてください。
 VSCodeVim の入力ソース自動切り替えを使う場合は、VS Code から実行できる場所に
 `im-select` を導入し、`vim.autoSwitchInputMethod.enable` を有効にしてください。
 
