@@ -48,7 +48,7 @@ Git の名前・メール・仕事用 includeIf は書き込み可能な ~/.gitc
 初回の対話シェルでは Antigen がネットワークからプラグインを取得する。
 Vim のプラグインは :PlugInstall で取得する。これらのプラグインの版は flake.lock の対象外。
 Vim のスワップディレクトリは mkdir -p ~/.vim/tmp で作成できる。
-Cursor の settings.json、VS Code、Karabiner は従来の方法で編集する。
+Cursor の settings.json、VS Code、Karabiner は[アプリ設定の復元手順](../README.md#アプリ設定の復元)を使う。
 
 ## 更新
 

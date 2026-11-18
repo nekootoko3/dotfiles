@@ -128,22 +128,22 @@
     "key": "ctrl+cmd+[",
     "command": "-workbench.action.showPreviousWindowTab"
   },
-//  {
-//    "key": "shift+cmd+[",
-//    "command": "-workbench.action.previousEditor"
-//  },
-//  {
-//    "key": "shift+cmd+[",
-//    "command": "workbench.action.showPreviousWindowTab"
-//  },
-//  {
-//    "key": "shift+cmd+]",
-//    "command": "-workbench.action.nextEditor"
-//  },
-//  {
-//    "key": "shift+cmd+]",
-//    "command": "workbench.action.showNextWindowTab"
-//  },
+  //  {
+  //    "key": "shift+cmd+[",
+  //    "command": "-workbench.action.previousEditor"
+  //  },
+  //  {
+  //    "key": "shift+cmd+[",
+  //    "command": "workbench.action.showPreviousWindowTab"
+  //  },
+  //  {
+  //    "key": "shift+cmd+]",
+  //    "command": "-workbench.action.nextEditor"
+  //  },
+  //  {
+  //    "key": "shift+cmd+]",
+  //    "command": "workbench.action.showNextWindowTab"
+  //  },
   {
     "key": "shift+alt+f12",
     "command": "-references-view.find",
@@ -714,5 +714,17 @@
   {
     "key": "shift+cmd+r",
     "command": "-solargraph.search"
+  },
+  {
+    "key": "shift+cmd+n",
+    "command": "workbench.action.files.newUntitledFile"
+  },
+  {
+    "key": "cmd+n",
+    "command": "-workbench.action.files.newUntitledFile"
+  },
+  {
+    "key": "cmd+n",
+    "command": "explorer.newFile"
   }
 ]
