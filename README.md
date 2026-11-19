@@ -31,6 +31,22 @@ GUI の削除はアプリを終了してから実行します。設定データ�
 リストを手で編集した場合や他の Mac で変更を取り込んだ場合は、`macenv apply cli` または
 `macenv apply gui` で反映します。
 
+### パッケージの更新
+
+```sh
+macenv update cli
+macenv update gui
+```
+
+CLI は言語ランタイムを含む共通パッケージを 26.05 系列内で更新します。
+初回実行時は Nixpkgs のコミット指定を 26.05 の追従指定に変更し、正確な版を flake.lock に保存します。
+GUI は配布定義を更新して宣言済み Cask を反映します。対象アプリを終了して実行してください。
+BetterTouchTool・CleanShot X・Dash は個別の版固定を維持します。
+更新後は動作を確認し、flake.nix と flake.lock の差分を Git に保存します。
+プロジェクト固有の devShell、VS Code 拡張、Nix 本体は各々の更新手順を使います。
+更新の取得・ビルドに失敗した場合は設定ファイルを実行前へ戻します。
+適用中に失敗した場合は表示された `macenv apply cli` または `macenv apply gui` で再実行できます。
+
 ### アプリ設定の同期
 
 設定を変更した Mac で `save` を実行し、Git の差分を確認して共有する変更をコミットします。

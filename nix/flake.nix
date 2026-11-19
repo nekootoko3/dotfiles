@@ -9,7 +9,11 @@
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
     homebrew-core = { url = "github:Homebrew/homebrew-core"; flake = false; };
     homebrew-cask = { url = "github:Homebrew/homebrew-cask"; flake = false; };
-    nixpkgs.url = "github:NixOS/nixpkgs/b349185bb79c7cf7ad8ea8c097931730bf473c71";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-26.05-darwin";
+    mise = {
+      url = "github:jdx/mise/v2026.11.10";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -24,6 +28,7 @@
     homeConfigurations.mac = home-manager.lib.homeManagerConfiguration {
       pkgs = import nixpkgs {
         system = "aarch64-darwin";
+        overlays = [ inputs.mise.overlay ];
         config.allowUnfree = true;
       };
       modules = [ ./home.nix ];

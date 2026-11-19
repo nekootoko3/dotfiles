@@ -56,13 +56,41 @@ def build_and_switch(kind, rollback_build=None):
     except (OSError, subprocess.CalledProcessError, KeyboardInterrupt):
         if rollback_build:
             rollback_build()
-            print("Build failed. Restored the package list.", flush=True)
+            print("Build failed. Restored the configuration files.", flush=True)
         raise
     try:
         run(*switch, cwd=NIX_DIR, env=env)
     except (OSError, subprocess.CalledProcessError, KeyboardInterrupt):
         print(f"Apply failed. Retry with macenv apply {kind}.", flush=True)
         raise
+
+
+def update_packages(kind):
+    paths = [NIX_DIR / "flake.nix", NIX_DIR / "flake.lock"]
+    original = {path: path.read_bytes() for path in paths}
+
+    def restore():
+        for path, content in original.items():
+            write_file(path, content)
+
+    # Track compatible stable releases, retaining exact revisions in flake.lock.
+    inputs = ["homebrew-core", "homebrew-cask"]
+    if kind == "cli":
+        flake = paths[0].read_text()
+        flake = re.sub(
+            r'(nixpkgs.url = "github:NixOS/nixpkgs/)[0-9a-f]{40}(")',
+            r'\g<1>nixpkgs-26.05-darwin\2', flake,
+        )
+        write_file(paths[0], flake.encode())
+        inputs = ["nixpkgs", "home-manager"]
+    try:
+        run("nix", "flake", "update", *inputs, cwd=NIX_DIR,
+            env=dict(os.environ, NIX_CONFIG=NIX_CONFIG))
+    except (OSError, subprocess.CalledProcessError, KeyboardInterrupt):
+        restore()
+        raise
+    build_and_switch(kind, restore)
+    print(f"Updated {kind} packages. Review the change with git -C {REPO} diff.")
 
 
 def brew(*args, **kwargs):
@@ -233,6 +261,7 @@ def main():
         package.add_argument("action", choices=["add", "remove"])
         package.add_argument("name")
     commands.add_parser("apply").add_argument("kind", choices=["cli", "gui"])
+    commands.add_parser("update").add_argument("kind", choices=["cli", "gui"])
     settings = commands.add_parser("settings")
     settings.add_argument("action", choices=["save", "restore"])
     settings.add_argument("app", choices=["vscode", "cursor", "karabiner"])
@@ -243,6 +272,8 @@ def main():
         fcntl.flock(lock, fcntl.LOCK_EX)
         if args.command == "settings":
             sync_settings(args.action, args.app)
+        elif args.command == "update":
+            update_packages(args.kind)
         elif args.command == "apply":
             build_and_switch(args.kind)
         else:

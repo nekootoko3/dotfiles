@@ -59,6 +59,15 @@ Cursor の settings.json、VS Code、Karabiner は[アプリ設定の復元手�
 
 ## 更新
 
+普段は `macenv update cli` または `macenv update gui` を使う。
+CLI の初回更新では、Nixpkgs のコミット指定を nixpkgs-26.05-darwin に変更し、
+正確な版は flake.lock で固定する。GUI の更新は管理者認証が必要。
+
+mise 本体は公式リリースに固定している。更新するには `flake.nix` の
+`github:jdx/mise/v…` を希望のタグに変更し、`macenv apply cli` を実行する。
+
+手動で入力を更新する場合は次の手順を使う。
+
 作業中の変更を保存し、現在の Git コミットと Home Manager / nix-darwin の世代を記録する。
 
 ```sh
@@ -70,7 +79,7 @@ DARWIN_USER="$(id -un)" DARWIN_HOME="$HOME" nix --extra-experimental-features 'n
 
 その後、通常の反映を行う。onActivation.upgrade=true のため GUI 更新も実行する。
 Homebrew の独立した autoUpdate は無効、cleanup=none のため未宣言パッケージを自動削除しない。
-Nixpkgs はコミット固定なので、別途URLを見直す。home.stateVersion と system.stateVersion は
+Nixpkgs がコミット指定の間は別途URLを見直す。home.stateVersion と system.stateVersion は
 通常の更新に合わせて変更しない。
 
 BetterTouchTool 4.397、CleanShot X 4.7.8、Dash 8.2.0 はライセンス保全のため
